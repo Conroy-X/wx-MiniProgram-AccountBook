@@ -1,0 +1,45 @@
+<!--miniprogram/pages/index/index.wxml-->
+<view class="container">
+
+  <!-- 导航 -->
+  <!-- <view class="list">
+    <view class="list-item">
+      <text class="request-text">数据库指引</text>
+    </view>
+    <view class="list-item">
+      <text class="request-text" wx:for="{{7}}" style="color: {{step === index + 1 ? 'red': 'black'}}">{{index + 1}}</text>
+    </view>
+    <view class="list-item" wx:if="{{openid}}">
+      <text class="request-text">openid：{{openid}}</text>
+    </view>
+    <view class="list-item" wx:if="{{counterId}}">
+      <text class="request-text">当前记录 ID：{{counterId}}</text>
+    </view>
+  </view> -->
+
+  <!-- 快速操作数据库指引 -->
+
+<view class="guide">
+  <div class="form-add">
+    <div class="form-radio">
+      <button data-num="1" class="radio {{_isSelect==1 ? 'selected' : ''}}" bindtap="formRadioClick">1</button>
+      <button data-num="2" class="radio {{_isSelect==2 ? 'selected' : ''}}" bindtap="formRadioClick">2</button>
+      <button data-num="3" class="radio {{_isSelect==3 ? 'selected' : ''}}" bindtap="formRadioClick">3</button>
+    </div>
+  </div>
+
+
+</view>
+
+  <!-- 结语 -->
+  <view class="guide" wx:if="{{step === 7}}">
+    <text class="headline">完成指引 !</text>
+    <text class="p">恭喜你，至此已完成数据库操作入门基础，可以点击调试器中的链接，查看详尽的数据库文档</text>
+
+    <div class="nav">
+      <button class="prev" size="mini" type="default" bindtap="prevStep">上一步</button>
+      <button class="next" size="mini" type="default" bindtap="goHome">回到首页</button>
+    </div>
+  </view>
+
+</view>

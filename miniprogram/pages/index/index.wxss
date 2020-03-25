@@ -1,0 +1,20 @@
+/* miniprogram/pages/index/index.wxss */
+
+@import "../../style/guide.wxss";
+
+.guide .counter {
+  margin-top: 50rpx;
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+.form-radio {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  background-color: rgb(250, 252, 251);
+}
+
+.selected {
+  background-color: #2C9F67;
+}
