@@ -20,13 +20,53 @@
   <!-- 快速操作数据库指引 -->
 
 <view class="guide">
-  <div class="form-add">
+  <view class="weui-form__control-area">
+    <form class="weui-cells__group weui-cells__group_form" bindsubmit="formSubmit">
+      <view class="weui-cells__title">表单组标题</view>
+      <view class="weui-cells weui-cells_form">
+        <view class="weui-cell weui-cell_active">
+          <view class="weui-cell__hd"><label class="weui-label">金额</label></view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="0.00" placeholder-class="weui-input__placeholder" name="money"/>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_active">
+          <view class="weui-cell__hd">							
+            <label class="weui-label">分类</label>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+              <view class="weui-input">{{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_active">
+          <view class="weui-cell__hd">							
+            <label class="weui-label">时间</label>
+          </view>
+            <picker mode="multiSelector" value="{{dateTime1}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+              <view class="tui-picker-detail">
+                 {{dateTimeArray1[0][dateTime1[0]]}}-{{dateTimeArray1[1][dateTime1[1]]}}-{{dateTimeArray1[2][dateTime1[2]]}} {{dateTimeArray1[3][dateTime1[3]]}}:{{dateTimeArray1[4][dateTime1[4]]}}
+              </view>
+            </picker>
+        </view>
+      </view>
+      <view class="weui-form__opr-area">
+        <button class="weui-btn weui-btn_primary" form-type="submit">确定</button> 
+      </view>
+    </form>
+    <button class="weui-btn weui-btn_primary" bindtap="getInfo">确定</button> 
+  </view>
+  <!-- <div class="form-add">
+    <div class="form-input">
+      <input type="text" placeholder="0.00"/>
+    </div>
     <div class="form-radio">
       <button data-num="1" class="radio {{_isSelect==1 ? 'selected' : ''}}" bindtap="formRadioClick">1</button>
       <button data-num="2" class="radio {{_isSelect==2 ? 'selected' : ''}}" bindtap="formRadioClick">2</button>
       <button data-num="3" class="radio {{_isSelect==3 ? 'selected' : ''}}" bindtap="formRadioClick">3</button>
     </div>
-  </div>
+  </div> -->
 
 
 </view>
