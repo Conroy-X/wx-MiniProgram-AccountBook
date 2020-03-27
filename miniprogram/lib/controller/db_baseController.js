@@ -23,8 +23,9 @@ export default class baseController {
     return result
   }
 
-   async onQuery (query) {
+   async onGet (query) {
     console.log('--------------here',query)
+    query = query || {}
     let query_limit = query.limit || 20       // 条数
     let query_skip = query.skip || 0          // 跳过条数
     let query_where = query.where || {}       // 查询限制条件
@@ -32,7 +33,7 @@ export default class baseController {
     let query_sort = query.sort || {'_id':'asc'}
     let query_sort_field = query_sort.length==0 ? '_id' : Object.keys(query_sort)[0]
     let query_sort_sort = query_sort.length==0 ? 'asc' : query_sort[query_sort_field]
-    let result = await this.db.collection("billFlowType")
+    let result = await this.db.collection(this.tableName)
       .where(query_where)
       .skip(query_skip)
       .limit(query_limit)
@@ -46,6 +47,7 @@ export default class baseController {
           return {success:false, result:res}
         }
       })
+      console.log(result,'this is result ')
     return result
   }
 

@@ -3,12 +3,20 @@ import billFlowDetail from "../../lib/module/billFlowDetail"
 import billFlowType from "../../lib/module/billFlowType"
 
 var dateTimePicker = require('../../utils/dateTimePicker.js');
+// const computedBehavior = require('miniprogram-computed')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    form:{
+      money:0
+    },
+  /**
+   * 分类相关变量
+   * @param {*} e 
+   */
     flowTime:new Date().toLocaleString(),
     objectMultiShow: [],
     objectMultiArray: [],
@@ -16,7 +24,10 @@ Page({
     multiIndex: [],
     checkeIndex: [],
 
-
+  /**
+   * 日期变动相关变量
+   * @param {*} e 
+   */
     date: '2018-10-01',
     time: '12:00',
     dateTimeArray: null,
@@ -25,7 +36,17 @@ Page({
     dateTime1: null,
     startYear: 2000,
     endYear: 2050,
+
+    /**
+     * 
+     */
+    showInputErr:false,
   },
+
+  /**
+   * 分类级联选择相关函数
+   * @param {*} e 
+   */
   bindMultiPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
@@ -50,8 +71,6 @@ Page({
     for (let i = e.detail.column; i < data.objectMultiShow.length - 1; i++) {
       data.multiIndex[i + 1] = 0
     }
-    console.log(data.multiArray,data.multiIndex)
-    
     /**
      * 改变第i列数据之后，后几列数据更新
      **/
@@ -60,10 +79,14 @@ Page({
       data.multiArray[i + 1] = arry[data.multiIndex[i]].subNode.map(item => item.name)
       arry = arry[data.multiIndex[i]].subNode
     }
-    console.log(data)
     // 数据更新
     this.setData(data);
   },
+
+/**
+ * 日期变动相关函数
+ * @param {*} e 
+ */
 
   changeDate(e){
     this.setData({ date:e.detail.value});
@@ -104,7 +127,6 @@ Page({
 
   async initInfo () {
     let res = await billFlowType.get({where:{type:"支出"}})
-    console.log(res)
     let data = {
       objectMultiShow: this.data.objectMultiShow,
       objectMultiArray: this.data.objectMultiArray,
@@ -113,13 +135,12 @@ Page({
       checkeIndex: this.data.checkeIndex
     }
     data.objectMultiArray = res.result
-    // data.multiIndex = (new Array(data.objectMultiArray.length)).fill(0)
+    data.multiIndex = (new Array(data.objectMultiArray.length)).fill(0)
     data.objectMultiShow = [data.objectMultiArray, data.objectMultiArray[0].subNode]
     data.multiArray = data.objectMultiShow.map((item, index) => {
       item = item.map(i => i.name)
       return item
     })
-    console.log(data)
     this.setData(data)
   },
   initTime () {
@@ -136,6 +157,49 @@ Page({
       dateTimeArray1: obj1.dateTimeArray,
       dateTime1: obj1.dateTime
     });
+  },
+  formReset (e) {
+    console.log(e)
+    this.initInfo()
+    this.initTime()
+  },
+  formSubmit (e) {
+    let timeIndex = e.detail.value.time
+    let typeIndex = e.detail.value.type
+    e.detail.value
+    let time =  parseInt(this.data.dateTimeArray1[0][timeIndex[0]]) + '/'
+              + parseInt(this.data.dateTimeArray1[1][timeIndex[1]]) + '/'
+              + parseInt(this.data.dateTimeArray1[2][timeIndex[2]]) + ' ' 
+              + parseInt(this.data.dateTimeArray1[3][timeIndex[3]]) + ':' 
+              + parseInt(this.data.dateTimeArray1[4][timeIndex[4]])
+    time = new Date(time).toUTCString()
+    let type = this.data.multiArray[0][typeIndex[0]]
+    let subType = this.data.multiArray[1][typeIndex[1]]
+    let money = e.detail.value.money
+
+    let query = {}
+    query = Object.assign({}, {data:{"money":money,"type":type,"subType":subType,"time":time}})
+    billFlowDetail.add(query)
+    // 获取所有data,
+    console.log(e.detail.value, this.data.dateTimeArray1, this.data.multiArray)
+  },
+
+  formInputChange (e) {
+    let money = this.chechNumber(e.detail.value)
+    e.detail.value = money
+  },
+  chechNumber(str){
+    let regstr = str.match(/[0-9]*[.]{0,1}[0-9]{0,2}/)
+    console.log(regstr)
+    if(regstr[0] != ''){
+      if(regstr[0][0] == '.'){
+        regstr[0] = '0' + regstr[0]
+      }
+      this.setData({showInputErr:false})
+      return regstr[0]
+    }
+    this.setData({showInputErr:true})
+    return str
   },
 
 

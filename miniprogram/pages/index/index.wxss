@@ -1,7 +1,13 @@
 /* miniprogram/pages/index/index.wxss */
 
-@import "../../style/guide.wxss";
-
+/* @import "../../style/guide.wxss"; */
+.guide {
+  width: 100%;
+  /* padding: 20rpx; */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
 .guide .counter {
   margin-top: 50rpx;
   display: flex;
@@ -17,4 +23,16 @@
 
 .selected {
   background-color: #2C9F67;
+}
+.button-sp-area {
+  padding-top: 15rpx;
+  text-align:center;
+  /* align-content: space-between; */
+}
+.weui-btn_mini{
+  margin:5% !important;
+  width: 40% !important;
+}
+.form-container {
+  width: 100%;
 }

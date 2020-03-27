@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/billFlow/billFlow",
     "pages/index/index"
+    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -10,25 +12,17 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "backgroundColor":"#FFFFFF",
-    "position":"bottom",
-    "borderStyle":"white",
+    "backgroundColor": "#FFFFFF",
+    "position": "bottom",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "新建"
+        "text": "添加"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/billFlow/billFlow",
         "text": "查询"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "统计"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的"
       }
     ]
   },
